@@ -19,7 +19,7 @@ int *removeEven(int *&Arr, int size){
     Arr = temp;
     return Arr;
 }
-/*
+
 int main(){
     int *arr;
     arr = new int[10];
@@ -36,4 +36,3 @@ int main(){
     delete []arr;
     return 0;
 }
-*/

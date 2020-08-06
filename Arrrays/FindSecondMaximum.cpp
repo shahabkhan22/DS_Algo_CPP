@@ -42,7 +42,7 @@ int findSecondMax_onceArrayTraversal(int arr[], int size){
     }
     return secondMax;
 }
-/*
+
 int main(){
     int size = 6;
     int arr[size] = {2,3,3,1,3,3};
@@ -55,4 +55,3 @@ int main(){
 
     return 0;
 }
-*/

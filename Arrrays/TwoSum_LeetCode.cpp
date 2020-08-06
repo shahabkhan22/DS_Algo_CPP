@@ -67,7 +67,7 @@ int *findSum_SortingArray(int arr[], int value, int size){
     return arr;
 }
 
-/*
+
 int main(){
     int size = 5, value = 18;
     int arr[size] = {16,6,12,2,5};
@@ -105,4 +105,3 @@ int main(){
 
 
 }
-*/
