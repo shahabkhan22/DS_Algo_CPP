@@ -28,6 +28,11 @@ public:
     void reverse();
     void insertLoop();
     bool detectLoop();
+    int findMidddleElement();
+    void removeDuplicates();
+    void Union(LinkedList list1, LinkedList list2);
+    void Intersection(LinkedList list1, LinkedList list2);
+    int findNthNode(int );
 };
 
 LinkedList::LinkedList(){
@@ -45,14 +50,13 @@ bool LinkedList::isEmpty(){
         return false;
 }
 
-
 bool LinkedList::printList(){
     if(isEmpty()){
-        std::cout << "List is Empty";
+        std::cout << endl<<"List is Empty";
         return false;
     }
     Node *temp = head;
-    std::cout<<"List : ";
+    std::cout<<endl<<"List : ";
 
     while(temp != nullptr){
         std::cout<< temp -> data <<"->";
@@ -197,19 +201,127 @@ bool LinkedList::detectLoop() {
     return false;
 }
 
-int main(){
-    LinkedList list;
+int LinkedList::findMidddleElement() {
+    if(isEmpty())
+        return 0;
 
-    for(int i = 1; i <= 5; i++){
-        list.insertAtHead(i);
-        //list.printList();
+    Node * currentNode = head;
+
+    if(currentNode->nextElement == nullptr)
+        return currentNode->data;
+
+    Node * middleNode = currentNode;
+    currentNode = currentNode->nextElement->nextElement;
+
+    while(currentNode != nullptr){
+        middleNode = middleNode->nextElement;
+        currentNode = currentNode->nextElement;
+
+        if(currentNode != nullptr)
+            currentNode = currentNode->nextElement;
+    }
+    if(middleNode != nullptr)
+        return middleNode->data;
+
+    return 0;
+}
+
+void LinkedList::removeDuplicates() {
+    Node * start, * startNext, * duplicate;
+    start = head;
+
+    while(start != nullptr && start->nextElement != nullptr){
+        startNext = start;
+
+        while(startNext->nextElement != nullptr){
+            if(start->data == startNext->nextElement->data){
+                duplicate = startNext->nextElement;
+                startNext->nextElement = startNext->nextElement->nextElement;
+                delete (duplicate);
+            }
+            else
+                startNext = startNext->nextElement;
+        }
+        start = start->nextElement;
     }
 
-    list.insertLoop();
-    //list.printList();
+}
 
-    bool checkLoop = list.detectLoop();
-    std::cout<<endl<<"Loop Detected: "<<checkLoop;
+void LinkedList::Union(LinkedList list1, LinkedList list2) {
+    if(list1.isEmpty())
+        list2.printList();
+    else if(list2.isEmpty())
+        list1.printList();
 
+    Node * start = list1.head;
+
+    while(start->nextElement != nullptr)
+        start = start->nextElement;
+
+    start->nextElement = list2.head;
+    list1.removeDuplicates();
+    list1.printList();
+}
+
+void LinkedList::Intersection(LinkedList list1, LinkedList list2) {
+    LinkedList list3;
+    Node *t1 = list1.head, *t2 = list2.head;
+
+    while(t1 != nullptr){
+        while(t2 != nullptr){
+            if(t1->data == t2->data)
+                list3.insertAtHead(t1->data);
+            t2 = t2->nextElement;
+        }
+        t2 = list2.head;
+        t1 = t1->nextElement;
+    }
+    list3.removeDuplicates();
+    list3.printList();
+}
+
+int LinkedList::findNthNode(int n) {
+    if (isEmpty())
+        return -1;
+
+    int length = 0;
+    Node * currentNode = head;
+
+
+    while (currentNode != nullptr) {
+        currentNode = currentNode->nextElement;
+        length++;
+    }
+
+
+    currentNode = head;
+    int position = length - n;
+
+    if (position < 0 || position > length)
+        return -1;
+
+    int count = 0;
+
+    while (count != position) {
+        currentNode = currentNode->nextElement;
+        count++;
+    }
+
+    if (currentNode != nullptr)
+        return currentNode->data;
+
+    return -1;
+
+}
+
+int main(){
+    LinkedList list;
+    for(int i = 0; i <= 7; i++)
+        list.insertAtHead(i);
+
+    std::cout<<endl<<"List = ";
+    list.printList();
+    int n = 5;
+    std::cout<<endl<<"Value at Node "<<n<<" = "<<list.findNthNode(n);
     return 0;
 }
