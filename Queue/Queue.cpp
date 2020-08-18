@@ -65,7 +65,7 @@ void myQueue::showQueue() {
     std::cout<<endl;
 }
 
-
+/*
 int main(){
     myQueue queue(5);
     queue.enQueue(2);
@@ -89,3 +89,4 @@ int main(){
 
     return 0;
 }
+*/
