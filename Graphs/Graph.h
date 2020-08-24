@@ -1,10 +1,12 @@
 #include <iostream>
+#include <cassert>
 using namespace std;
 #ifndef DS_ALGO_CPP_GRAPH_H
 #define DS_ALGO_CPP_GRAPH_H
 
 #endif //DS_ALGO_CPP_GRAPH_H
 
+//----------Linked List-----------------
 class Node{
 public:
     int data;
@@ -52,7 +54,6 @@ bool LinkedList::isEmpty(){
     else
         return false;
 }
-
 
 bool LinkedList::printList(){
     if(isEmpty()){
@@ -284,6 +285,158 @@ void LinkedList::Intersection(LinkedList list1, LinkedList list2) {
     list3.printList();
 }
 
+//-------------Queue----------------------------
+
+class myQueue{
+private:
+    int * queueArr;
+    int capacity;
+    int numElements;
+    int front;
+    int back;
+public:
+    myQueue(int size);
+    void enQueue(int value);
+    int deQueue();
+    bool isEmpty();
+    int getFront();
+    int getSize();
+    void showQueue();
+};
+
+myQueue::myQueue(int size) {
+    capacity = size;
+    queueArr = new int[size];
+    assert(queueArr != NULL);
+    numElements = 0;
+    front = 0;
+    back = -1;
+}
+
+bool myQueue::isEmpty() {
+    return (numElements == 0);
+}
+
+int myQueue::getFront() {
+    if (isEmpty()){
+        std::cout<<endl<<"Queue Empty"<<endl;
+    }
+    else
+        return queueArr[front];
+}
+
+int myQueue::getSize() {
+    return numElements;
+}
+
+void myQueue::enQueue(int value) {
+    if(numElements == capacity){
+        std::cout<<endl<<"Queue FULL"<<endl;
+        return;
+    }
+
+    if(back == capacity -1)
+        back = -1;
+
+    queueArr[++back] = value;
+    numElements++;
+}
+
+int myQueue::deQueue() {
+    if(isEmpty()){
+        std::cout<<endl<<"Queue EMPTY";
+        return -1;
+    }
+
+    int temp = queueArr[front++];
+    if(front == capacity)
+        front = 0;
+    numElements--;
+    return temp;
+}
+
+void myQueue::showQueue() {
+    int i = front;
+    int count = 0;
+    while(count != numElements){
+        std::cout<<"  "<<queueArr[i%capacity];
+        i++;
+        count ++;
+    }
+    std::cout<<endl;
+}
+
+//--------------Stack---------------------
+
+class myStack {
+private:
+    int * stackArr;
+    int capacity;
+    int numElements;
+public:
+    myStack(int size);
+    bool isEmpty();
+    int getTop();
+    bool push(int value);
+    int pop();
+    int getSize();
+    void showStack();
+};
+
+
+myStack::myStack(int size){
+    capacity = size;
+    stackArr = new int[size];
+    assert(stackArr!= NULL);
+    numElements = 0;
+}
+
+bool myStack::isEmpty() {
+    return (numElements == 0);
+}
+
+int myStack::getTop(){
+    return (numElements == 0? -1: stackArr[numElements -1]);
+}
+
+bool myStack::push(int value) {
+    if (numElements < capacity){
+        stackArr[numElements] = value;
+        numElements++;
+        return true;
+    }
+    else{
+        std::cout<<endl<<"Stack FULL"<<endl;
+        return false;
+    }
+}
+
+int myStack::pop(){
+    if (numElements == 0){
+        std::cout<<endl<<"Stack EMPTY"<<endl;
+        return -1;
+    }
+    else{
+        numElements--;
+        return stackArr[numElements];
+    }
+}
+
+int myStack::getSize(){
+    return numElements;
+}
+
+void myStack::showStack() {
+    int i = 0;
+    while (i < numElements){
+        std::cout<<"\t"<<stackArr[numElements -1 -i];
+        i++;
+    }
+    std::cout<<endl;
+}
+
+
+//--------------------Graph-----------------------
 
 class Graph{
 private:
@@ -293,6 +446,37 @@ public:
     Graph(int v);
     void addEdge(int source, int destination);
     void printGraph();
-
+    int getVertices();
+    LinkedList * getArray();
 };
 
+Graph::Graph(int v){
+    array = new LinkedList[v];
+    vertices = v;
+}
+void Graph::addEdge(int source, int destination){
+    if(source < vertices && destination < vertices)
+        array[source].insertAtHead(destination);
+}
+
+void Graph::printGraph(){
+    std::cout<<endl<<"Adjacency List of Directed Graph: "<<endl;
+    Node * temp;
+    for(int i = 0; i<vertices; i++){
+        std::cout<<" | "<<i<<"| => ";
+        temp = array[i].getHead();
+
+        while(temp != NULL){
+            std::cout<<" ["<<temp->data <<"] ->";
+            temp = temp->nextElement;
+        }
+        std::cout<<"NULL"<<endl;
+    }
+}
+
+int Graph::getVertices() {
+    return vertices;
+}
+LinkedList* Graph::getArray() {
+    return array;
+}
