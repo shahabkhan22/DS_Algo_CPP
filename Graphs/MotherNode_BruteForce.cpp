@@ -73,5 +73,7 @@ int main()
     g.addEdge(1,2);
     g.addEdge(3,0);
     g.addEdge(3,1);
-    cout << findMotherVertex(g) <<endl;
+    int ret =  findMotherVertex(g);
+    std::cout<<endl<<"Mother Node: "<<ret<<endl;
+    g.printGraph();
 }
