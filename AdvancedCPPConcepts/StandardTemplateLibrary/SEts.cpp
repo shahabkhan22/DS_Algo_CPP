@@ -24,6 +24,6 @@ int main(){
 
     //can use the class objects as well
     //similar to maps
-    
+
     return 0;
 }
