@@ -1,5 +1,6 @@
 #include<iostream>
 #include "Node.h"
+#include "ArrayList.h"
 using namespace std;
 
 class BinarySearchTree{
@@ -186,8 +187,8 @@ public:
 
 }
 
-//Helper function to find least value node in right-subtree of currentNode
-Node * findLeastNode(Node * currentNode) {
+    //Helper function to find least value node in right-subtree of currentNode
+    Node * findLeastNode(Node * currentNode) {
 
   Node * temp = currentNode;
   while (temp -> leftChild != NULL) {
@@ -197,23 +198,29 @@ Node * findLeastNode(Node * currentNode) {
   return temp;
 }
 
-bool deleteBST(int value){
+    bool deleteBST(int value){
     return Delete(root, value);
 }
 
-void preOrderTraversal(Node * currentNode){
-    if(currentNode != NULL){
-        std::cout<<" "<<currentNode->value;
-        preOrderTraversal(currentNode->leftChild);
-        preOrderTraversal(currentNode->rightChild);
+    void preOrderTraversal(Node * currentNode){
+        if(currentNode != NULL){
+            std::cout<<" "<<currentNode->value;
+            preOrderTraversal(currentNode->leftChild);
+            preOrderTraversal(currentNode->rightChild);
+        }
     }
-}
 
-void postOrderTraversal(Node * currentNode){
-    if(currentNode != NULL){
-        postOrderTraversal(currentNode -> leftChild);
-        postOrderTraversal(currentNode -> leftChild);
-        std::cout<<" "<<currentNode->value;
+    void postOrderTraversal(Node * currentNode){
+        if(currentNode != NULL){
+            postOrderTraversal(currentNode -> leftChild);
+            postOrderTraversal(currentNode -> leftChild);
+            std::cout<<" "<<currentNode->value;
+        }
     }
-}
+
+    void inOrderTraversal(Node * rootNode, ArrayList * result);
+
+    int findMin(Node * rootNode);
+
+    int findKthMax(Node * rootNode, int k, int nodes);
 };
