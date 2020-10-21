@@ -223,4 +223,10 @@ public:
     int findMin(Node * rootNode);
 
     int findKthMax(Node * rootNode, int k, int nodes);
+
+    string findAncestors(Node * rootNode, int k);
+
+    int findHeight(Node * rootNode);
+
+    string findKNodes(Node * rootNode, int k);
 };
